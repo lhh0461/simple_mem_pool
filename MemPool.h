@@ -16,10 +16,11 @@ public:
     const int DEFAULT_MALLOC_SIZE = 32;
 public:
     MemPool(): MemPool(DEFAULT_MALLOC_SIZE) {}
-    MemPool(size_t size) {
-        NewBlock(size);
-    }
-    ~MemPool() {
+    MemPool(size_t size) { NewBlock(size); }
+    MemPool(const MemPool &) = delete; //阻止拷贝
+    MemPool &operator=(const MemPool &)  = delete; //阻止赋值
+    ~MemPool()
+    {
         m_FreeList.clear();
         auto it = m_BlockList.begin();
         for (; it != m_BlockList.end(); it++) {
